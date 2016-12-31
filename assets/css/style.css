@@ -1,0 +1,15 @@
+form {
+	height: 300px;
+	width: 300px;
+	border: 2px solid blue;
+}
+
+button {
+	margin: 20px;
+}
+
+.displayResult, .displayStats {
+	height: 250px;
+	width: 250px;
+	border: 2px solid orange;
+}

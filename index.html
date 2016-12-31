@@ -3,15 +3,45 @@
 <head>
 	<title>Trivia Game</title>
 	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<script type="javascript" src="assets/javascript/game.js"></script>
 </head>
 <body>
+<div class="container">
 	<button id="start" class = "btn btn-lg btn-info">Start</button>
 
-	<form>
-		<fieldset class="form-group row">
-			
-	    </fieldset>
+	<div class="row">
+		<div class="col-md-3 col-md-offset-9">
+			Time Left: <span id="timeLeft"></span>
+		</div>
+	</div>
+	<form class="form-group row">
+		<div class="col-md-6 triviaQuestion col-md-offset-3">
+			<p id="triviaQuestion"></p>
+			<div class="radio">
+		      	<input type="radio" name="optradio">
+		    </div>
+	    </div>
 	</form>
+
+	<div class="row">
+		<div class="col-md-8 displayResult col-md-offset-2">
+			<p id="message"></p>
+			The correct answer was: <span id="rightAnswer"></span>
+			<div class="image"></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8 displayStats col-md-offset-2">
+			<p id="correctAnswers"></p>
+			<p id="wrongAnswers"></p>
+			<p id="unanswered"></p>
+
+			<button id="restartTrivia" class="btn btn-lg btn-info">Restart Trivia</button>
+		</div>
+	</div>
+</div>
 </body>
 </html>
