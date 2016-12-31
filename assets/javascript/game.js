@@ -1,13 +1,15 @@
 // Question class
 class TriviaQuestion {
-	constructor TriviaQuestion(question,rightAnswer,choices[]) {
-		this.question = question;
-		this.rightAnswer = rightAnswer;
-		this.choices = choices;
+	constructor(data) {
+		this.question = data.question;
+		this.rightAnswer = data.correct_answer;
+		this.choices = data.incorrect_answers;
 	}
 
-	function validate(userChoice) {
-		var result = "";
+	validate() {}
+
+		// return (userChoice === this.rightAnswer);
+		//var result = "";
 		// if(userChoice === rightAnswer){
 		// 	wins++;
 		// 	result = "correct";
@@ -17,54 +19,61 @@ class TriviaQuestion {
 		// 	losses++;
 		// 	result = "wrong";
 		// }
-		game.displayResult(result);
+		//game.displayResult(result);
 		// timer.stopCountdown(); /////////// Don't know if this can access timer object created in beginGame function of game object.
-	}
-
-	funtion getGiphyImage(questionObject) {
-		var giphyImage = // get image from giphy site using ajax
-		// get a word from questionObject
-		// use ajax call to query word and get image
-		//???????document.getElementByClassName("image").innerHTML("<img src='" + giphyImage + "'>"); ////// Not sure if this is done here or game.displayResult function
-	}
+	
+	
 }
 
 // Timer class
 class Timer {
-	constructor Timer(time){
+	constructor(time){
 		this.time = time;
 	}
 
-	function startCountdown {
+	startCountdown() {
 		var countdownInterval = setInterval(decrementTimer,1000);
 	}
 
-	function decrementTimer {
+	decrementTimer() {
 		number--;
-		document.getElementById("timeLeft").innerHTML = number;
+		$("#timeLeft").html = number;
 	}
 
-	function stopCountdown {
+	stopCountdown() {
 		clearInterval(countdownInterval);
 	}
 }
 
 // Game object
-var game {
+var game = {
 	
 	time: 15,
 	questionCount: 0,
 	rightAnswers: 0,
 	wrongAnswers: 0,
 	unanswered: 0,
+	questionsAndAnswersArray: [],
 
-	function beginGame {
+	getQuestions : function getQuestions()  {
+		var queryURL = "https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple";
+
+		return $.ajax({
+			url: queryURL,
+			method: "GET"
+		}).done(function(data){
+			questionsAndAnswersArray = data.results;
+			// console.log("Array of questions - " + questionsAndAnswersArray);
+		});
+	},
+
+	beginGame : function beginGame() {
 		if(questionCount == 10) {
 			game.endGame();
 		}
 		else{
-			// get random question, right answer and array of choices
-			var currentQuestion = new TriviaQuestion(// stuff gotten from trivia question api );
+			var randomQuestionIndex = Math.floor(Math.random()*questionsAndAnswersArray.length);
+			var currentQuestion = new TriviaQuestion(questionsAndAnswersArray);// stuff gotten from trivia question api );
 			// create an object of TriviaQuestion by passing the values obtained
 			// call display question method
 
@@ -75,52 +84,70 @@ var game {
 		}
 	},
 
-	function displayResult(result) {
+	getGiphyImage : function getGiphyImage(questionObject) {
+		var giphyImage = 0;// get image from giphy site using ajax
+		// get a word from questionObject
+		// use ajax call to query word and get image
+		//???????document.getElementByClassName("image").html("<img src='" + giphyImage + "'>"); ////// Not sure if this is done here or game.displayResult function
+	},
+
+	displayResult : function displayResult(result) {
+		$(".displayResult").show();
 		switch(result) {
 		    case "win":
-		       document.getElementById("message").innerHTML("You are Correct!!");
+		       $("#message").html("You are Correct!!");
 		       break;
 		    case "loss":
-		       document.getElementById("message").innerHTML("Wrong Answer!");
+		       $("#message").html("Wrong Answer!");
 		       break;
 		    default:     
 		}
 
-		document.getElementById("rightAnswer").innerHTML(currentQuestion.rightAnswer);
-	 	//??????? document.getElementById("image").innerHTML(giphyImage);//image received by querying giphy db
-	    document.getElementByClassName("image").innerHTML("<img src='" + giphyImage + "'>"); //////???????
+		$("#rightAnswer").html(currentQuestion.rightAnswer);
+	 	//??????? $("#image").html(giphyImage);//image received by querying giphy db
+	    $(".image").html("<img src='" + giphyImage + "'>"); //////???????
+	    setTimeOut($(".displayResult").hide(),4500);
 	},
 
-	function endGame() {
-		document.getElementById("correctAnswers").innerHTML = game.rightAnswers;
-		document.getElementById("wrongAnswers").innerHTML = game.wrongAnswers;
-		document.getElementById("unanswered").innerHTML = game.unanswered;
-		document.getElementByClassName("displayStats")[0].attribute("display","block");
+	endGame : function endGame() {
+		$("#correctAnswers").html = game.rightAnswers;
+		$("#wrongAnswers").html = game.wrongAnswers;
+		$("#unanswered").html = game.unanswered;
+		$(".displayStats").show();
 	},
 
-	function restartGame {
-		questionCount = 0,
-		rightAnswers = 0,
-		wrongAnswers = 0,
-		unanswered = 0,
+	restartGame : function restartGame() {
+		questionArray = [];
+		questionCount = 0;
+		rightAnswers = 0;
+		wrongAnswers = 0;
+		unanswered = 0;
 		game.beginGame();
+		$(".displayStats").hide();
 	}
 
-}
+};
 
 // program begins
-document.addEventListener("DOMContentLoaded", function(event) { 
+$(document).ready(function(event) { 
 
-  	document.getElementById("start").on("click",function(){
-  		game.beginGame();
+  	$("#start").on("click",function(){
+  		console.log("Start button clicked");
+  		$.when(game.getQuestions()).done(function(){
+  			console.log("ajax call ends");
+  			game.beginGame();
+  		}).fail(function(){
+  			console.log("Couldn't fetch data.");
+  		});
   	});
 
-  	document.getElementByQuery("choice").on("click", function(){
-  		// currentQuestion.validate(choiceClickedByUser);
+  	$(".choice").on("click", function(){
   		timer.stopCountdown(); /////////// Don't know how to access timer object, created in beginGame function, here.
+  		// currentQuestion.validate(choiceClickedByUser);
+  		game.getGiphyImage(currentQuestion.queryWord);
   	});
 
-  	document.getElementById("restartTrivia").on("click", function(){
+  	$("#restartTrivia").on("click", function(){
   		game.restartGame();
   	});
 
