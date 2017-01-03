@@ -9,27 +9,31 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	<script type="text/javascript" src="assets/javascript/game.js"></script>
-</head>
+</head> 
 <body>
 <div class="container">
-	<button id="start" class = "btn btn-lg btn-info">Start</button>
+	<div class="row openingPage">
+		<div class="col-sm-8 col-sm-offset-2">
+			<button id="start" class = "btn btn-lg btn-info">Start</button>
+		</div>
+	</div>
+	
 
 	<div class="row">
-		<div class="col-md-3 col-md-offset-9">
+		<div class="col-sm-3 col-sm-offset-9">
 			Time Left: <span id="timeLeft"></span>
 		</div>
 	</div>
+	</div>
 	<form class="form-group row">
-		<div class="col-md-6 triviaQuestion col-md-offset-3">
+		<div class="col-sm-6 triviaQuestion col-sm-offset-3">
 			<p id="triviaQuestion"></p>
-			<div class="radio">
-		      	<input type="radio" name="optradio">
-		    </div>
+			<div class="answerOptions"></div>
 	    </div>
 	</form>
 
 	<div class="row">
-		<div class="col-md-8 displayResult col-md-offset-2">
+		<div class="col-sm-8 displayResult col-sm-offset-2">
 			<p id="message"></p>
 			The correct answer was: <span id="rightAnswer"></span>
 			<div class="image"></div>
@@ -37,7 +41,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-8 displayStats col-md-offset-2">
+		<div class="col-sm-8 displayStats col-sm-offset-2">
 			<p id="correctAnswers"></p>
 			<p id="wrongAnswers"></p>
 			<p id="unanswered"></p>
