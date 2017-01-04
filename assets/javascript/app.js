@@ -9,6 +9,10 @@ class TriviaQuestion {
 
 	validate() {
 
+		// get value of input radio button clicked
+		// compare value to this.correctAnswer
+		// if same, return 
+
 		return (userChoice == this.rightAnswer);
 		//var result = "";
 		// if(userChoice === rightAnswer){
@@ -26,28 +30,7 @@ class TriviaQuestion {
 	
 }
 
-// let countdownInterval;
-// Timer class
-class Timer {
-
-	constructor(time){
-		this.time = time;
-	}
-
-
-	startCountdown() {
-		this.countdownInterval = setInterval(this.decrementTimer,1000);
-	}
-
-	decrementTimer() {
-		this.time--;
-		$("#timeLeft").html = time;
-	}
-
-	stopCountdown() {
-		clearInterval(this.countdownInterval);
-	}
-}
+var countdownInterval;
 
 // Game object
 var game = {
@@ -58,7 +41,9 @@ var game = {
 	wrongAnswers: 0,
 	unanswered: 0,
 	questionsAndAnswersArray: [],
-	arrayOfUsedIndices : [],
+	arrayOfUsedIndices: [],
+	countDownStarted: false,
+	countDownEnd: false,
 
 	getQuestions : function getQuestions()  {
 		var queryURL = "https://opentdb.com/api.php?amount=10&category=17&difficulty=medium&type=multiple";
@@ -105,7 +90,7 @@ var game = {
 
 			// to display choices ->
 			// loop through choice array
-			// create new radio button
+			// create new div
 			// if iterator == correct answer index, use data-answer="correct", else data-answer="wrong"
 
 			var correctAnswerIndex = Math.floor(Math.random()*3);
@@ -113,11 +98,11 @@ var game = {
 			console.log("incorrect answers " + currentQuestion.incorrectAnswers);
 			var j=0;
 			for(var i=0; i<4; i++) {
-				var inputContainer = $('<div>');
-				inputContainer.addClass("options col-sm-6");
-				var newChoice = $('<input>');
-				newChoice.attr({'type': 'radio', 'name' : 'choices'});
-				newChoice.css({'width' : '20px' , 'height' : '20px'});
+				var newChoice = $('<div>');
+				newChoice.addClass("col-sm-6 options text-center");
+				// var newChoice = $('<input>');
+				// newChoice.attr({'type': 'radio', 'name' : 'choices'});
+				// newChoice.css({'width' : '20px' , 'height' : '20px'});
 				if(i === correctAnswerIndex) {
 					choiceArray.push(currentQuestion.correctAnswer);
 					newChoice.attr("data-answer", "correct");
@@ -126,68 +111,45 @@ var game = {
 					choiceArray.push(currentQuestion.incorrectAnswers[j++]);
 					newChoice.attr("data-answer", "wrong");
 				}
-				newChoice.attr("value",choiceArray[i]);
-				inputContainer.append(newChoice).append(choiceArray[i] + "<br>");
-				$(".answerOptions").append(inputContainer);
+				newChoice.append(choiceArray[i]);
+				$(".answerOptions").append(newChoice);
 			}
 
 			console.log("choice array " + choiceArray);
 			console.log("correct answer is at position " + (correctAnswerIndex+1));
 
-			// to display the options
-			// 
-
-			// for(var i=0; i<4; i++) {
-			// 	var j =0;
-			// 	var newChoice = document.createElement('input');
-			// 	newChoice.setAttribute('type', 'radio');
-			// 	if(i === correctAnswerIndex) {
-			// 		newChoice.value = game.choiceArray[correctAnswerIndex];
-			// 		console.log("newChoice's value " + newChoice.value);
-			// 	}
-
-			// 	else {
-			// 			while(j<3) {
-			// 				console.log("choieARray " + game.choiceArray);
-			// 				newChoice.value = game.choiceArray[++j];
-			// 				console.log("newChoice value value " + newChoice.value);
-			// 			}
-			// 		}
-			// 	$(".answerOptions").append(newChoice);
-			// }
-
-			// creating new Timer object and starting countdown
-			var timer = new Timer(15);
-			timer.startCountdown();
+			game.startCountdown();
 			game.questionCount ++;
 			console.log("Questions over - " + game.questionCount);
 		}
 	},
 
-	// displayChoices : function displayChoices() {
+	startCountdown : function startCountdown() {
+		if(!game.countDownEnd && !game.countDownStarted){
+			game.countdownInterval = setInterval(game.decrementTimer,1000);
+		}
+		game.countDownStarted = true;
+	},
 
-	// 	// get a random number from 0 to 3 for correct answer's index
-	// 	// loop through choiceArray and push choices
-	// 	// if iterator == correct answer index, push correct answer
+	decrementTimer : function decrementTimer() {
+		if(game.time>0){
+			game.time--;
+		}
 
-	// 	correctAnswerIndex = Math.floor(Math.random()*3);
-	// 	for(var i=0; i<4; i++) {
-	// 		if(i === correctAnswerIndex) {
-	// 			game.choiceArray.push(game.currentQuestion.correctAnswer);
-	// 		}
-	// 		game.choiceArray.push(game.currentQuestion.incorrectAnswers);
-	// 	}
+		$("#timeLeft").html(game.time);
+		console.log("counting down - " + game.time);
 
-	// 	for(var i=0; i<4; i++) {
-	// 		var newChoice = document.createElement('input');
-	// 	newChoice.setAttribute('type', 'radio');
+		if(game.time === 0) {
+			game.countDownEnd = true;
+			game.stopCountdown();
+			game.displayResult("0");
+		}
+	},
 
-	// 	newChoice.value = choiceArray[correctAnswerIndex];  
-
-	// 	$(".answerOptions").appendChild(newChoice);
-	// 	}
-		
-	// },
+	stopCountdown : function stopCountdown() {
+		game.countDownStarted = false;
+		clearInterval(game.countdownInterval);
+	},
 
 	// getGiphyImage : function getGiphyImage(questionObject) {
 	// 	var giphyImage = 0;// get image from giphy site using ajax
@@ -197,11 +159,17 @@ var game = {
 	// },
 
 	displayResult : function displayResult(result) {
+
 		$(".displayResult").show();
 
-		result ? $("#message").html("You are Correct!!!") : $("#message").html("Wrong Answer!");     
+		if(result === "0") {
+			$("#message").html("You ran out of time.");
+		}
+		else {
+			result ? $("#message").html("You are Correct!!!") : $("#message").html("Wrong Answer!");     
+		}
 		 
-		$("#rightAnswer").html(currentQuestion.correctAnswer);
+		$("#rightAnswer").html("The correct answer was - " + game.currentQuestion.correctAnswer);
 	 	//??????? $("#image").html(giphyImage);//image received by querying giphy db
 	    // $(".image").html("<img src='" + giphyImage + "'>"); //////???????
 	    setTimeOut($(".displayResult").hide(),4500);
@@ -221,6 +189,8 @@ var game = {
 		this.rightAnswers = 0;
 		this.wrongAnswers = 0;
 		this.unanswered = 0;
+		this.countDownStarted = false;
+		this.countDownEnd = false
 		this.game.displayQuestion();
 		$(".displayStats").hide();
 	}
@@ -236,12 +206,12 @@ $(document).ready(function(event) {
   		game.displayQuestion();
   	});
 
-  	$(".choice").on("click", function(){
-  		timer.stopCountdown(); /////////// Don't know how to access timer object, created in displayQuestion function, here.
-  		//var isRightChoice = currentQuestion.validate(choiceClickedByUser);
+  	$(".options").on("click", function(){
+  		game.stopCountdown();
+  		var isRightChoice = game.currentQuestion.validate(choiceClickedByUser);
   		var isRightChoice = true;
   		game.displayResult(isRightChoice);
-  		game.getGiphyImage(currentQuestion.queryWord);
+  		// game.getGiphyImage(currentQuestion.queryWord);
   	});
 
   	$("#restartTrivia").on("click", function(){

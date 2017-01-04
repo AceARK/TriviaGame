@@ -9,8 +9,8 @@ body {
 
 form {
 	height: 300px;
-	width: 300px;
-	border: 2px solid white;
+	width: 900px;
+	border: 2px solid white;  /* change all this to respond to column-sizes in bootstrap */
 }
 
 button {
@@ -32,10 +32,21 @@ button {
 	width: 800px;
 }
 
-.options {
-	/*margin: 30px;*/
+#triviaQuestion {
 	height: 80px;
-	width: 300%;
+	display: inline-block;
+	/*min-width: 600%;  change this when configuring css */
+	font-size: 28px;
+	border: 3px solid darkblue;
+	background-color: lightgreen;
+	border-radius: 10px;
+	padding: 15px;
+}
+
+.options {
+	margin: 15px;
+	height: 80px;
+	width: 100%; /* change this when configuring css */
 	border: 3px solid darkblue;
 	background-color: lightblue;
 	border-radius: 10px;
