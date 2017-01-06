@@ -78,9 +78,6 @@ var game = {
 
 			var currentQuestion = new TriviaQuestion(game.questionsAndAnswersArray[randomQuestionIndex]);
 			console.log("created currentQuestion - " + currentQuestion);
-			// console.log("currentQuestion - " + this.currentQuestion.question);
-			// console.log("correct answer - " + this.currentQuestion.correctAnswer);
-			// console.log("wrong answers - " + this.currentQuestion.incorrectAnswers);
 
 			$("#triviaQuestion").html(currentQuestion.question);
 
