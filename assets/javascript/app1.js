@@ -72,6 +72,7 @@ var game = {
 			for(var k=0; k<4; k++) {
 				var newChoice = $('<input>');
 				newChoice.attr({'type': 'radio', 'name' : 'options'+[i]});
+				newChoice.addClass('options');
 				newChoice.css({'width' : '20px' , 'height' : '20px'});
 				if(k === correctAnswerIndex) {
 					choiceArray.push(currentQuestion.correct_answer);
@@ -112,7 +113,7 @@ var game = {
 		if(game.time === 0) {
 			game.countDownEnd = true;
 			game.stopCountdown();
-			game.displayResult("0");
+			game.displayResult();
 		}
 	},
 
@@ -124,28 +125,26 @@ var game = {
 
 	displayResult : function displayResult(result) {
 
-		$(".displayResult").show();
+		$(".displayResults").show();
 
-		if(result === "0") {
-			$("#message").html("You ran out of time.");
-		}
-		else {
-			result ? $("#message").html("You are Correct!!!") : $("#message").html("Wrong Answer!");     
-		}
+		if(game.time === 0){
+			$("#countDownComplete").show();
+		}	
 		 
-		$("#rightAnswer").html("The correct answer was - " + game.currentQuestion.correctAnswer);
-	 	//??????? $("#image").html(giphyImage);//image received by querying giphy db
-	    // $(".image").html("<img src='" + giphyImage + "'>"); //////???????
-	    setTimeOut($(".displayResult").hide(),4500);
-	    this.displayQuestion();
+		$("#correctAnswers").html(game.rightAnswers);
+		$("#wrongAnswers").html(game.wrongAnswers);
+
+		$("#unanswered").html(game.unanswered);
+	 	
+	    // setTimeout(function(){$(".displayResults").hide()},4500);
 	},
 
-	endGame : function endGame() {
-		$("#correctAnswers").html = this.rightAnswers;
-		$("#wrongAnswers").html = this.wrongAnswers;
-		$("#unanswered").html = this.unanswered;
-		$(".displayStats").show();
-	},
+	// endGame : function endGame() {
+		// $("#correctAnswers").html = this.rightAnswers;
+		// $("#wrongAnswers").html = this.wrongAnswers;
+		// $("#unanswered").html = this.unanswered;
+		// $(".displayStats").show();
+	// },
 
 	restartGame : function restartGame() {
 		this.questionArray = [];
@@ -156,13 +155,14 @@ var game = {
 		this.countDownStarted = false;
 		this.countDownEnd = false
 		this.game.displayQuestion();
-		$(".displayStats").hide();
+		$(".displayResults").hide();
 	}
 
 };
 
 // program begins
 $(document).ready(function(event) { 
+	$(".displayResults").hide();
 	ajaxCall();
 	
   	$("#start").on("click",function(){
@@ -171,11 +171,15 @@ $(document).ready(function(event) {
   	});
 
   	$(".options").on("click", function(){
-  		game.stopCountdown();
-  		var isRightChoice = game.currentQuestion.validate(choiceClickedByUser);
-  		var isRightChoice = true;
-  		game.displayResult(isRightChoice);
-  		// game.getGiphyImage(currentQuestion.queryWord);
+   		
+  		if($(this).attr('data-answer') == "correct") { ////////// this seems to not be working
+  			game.rightAnswers++;
+  			console.log("rightAnswer count " + game.rightAnswers);
+  		}
+  		else {
+  			game.wrongAnswers++;
+  			console.log("wrongAnswer count " + game.wrongAnswers);
+  		}
   	});
 
   	$("#restartTrivia").on("click", function(){
