@@ -60,9 +60,9 @@ var game = {
 	},
 
 	displayQuestions : function displayQuestions() {
-		for(var i=0; i<10; i++) {
+		for(var i=0; i<game.questionsAndAnswersArray.length; i++) {
 			var currentQuestion = game.questionsAndAnswersArray[i];
-			var questionDiv = $('<div.questionAndAnswerDiv>');
+			var questionDiv = $('<div.questionAndAnswerDiv.text-center>');
 			questionDiv.html(currentQuestion.question + "<br>");
 			console.log("question being filled " + currentQuestion.question);
 			var correctAnswerIndex = Math.floor(Math.random()*4);
@@ -83,7 +83,7 @@ var game = {
 					newChoice.attr("data-answer", "wrong");
 				}
 				questionDiv.append(newChoice);
-				questionDiv.append(choiceArray[k] + "</label><br>");
+				questionDiv.append(choiceArray[k] + "</label>");
 			}
 			$("#triviaQuestions").append(questionDiv);
 			$("#triviaQuestions").append("<br><br>");;
@@ -113,7 +113,8 @@ var game = {
 		if(game.time === 0) {
 			game.countDownEnd = true;
 			game.stopCountdown();
-			game.displayResult();
+			game.evaluateResults();
+			game.displayResults();
 		}
 	},
 
@@ -122,8 +123,25 @@ var game = {
 		clearInterval(game.countdownInterval);
 	},
 
+	evaluateResults : function evaluateResults() {
+		for(var i=0; i<game.questionsAndAnswersArray.length; i++) {
+			var option = "options"+i;
+			var selectedOption = ".options[name="+option+"]";
+			$(selectedOption).each(function() {
+				if($("input: checked").attributes.data-answer.nodeValue === "correct") { 
+		  			game.rightAnswers++;
+		  			console.log("rightAnswer count " + game.rightAnswers);
+		  		}
+		  		else {
+		  			game.wrongAnswers++;
+		  			console.log("wrongAnswer count " + game.wrongAnswers);
+		  		}
+			})
+		}
+		
+	}
 
-	displayResult : function displayResult(result) {
+	displayResults : function displayResults() {
 
 		$(".displayResults").show();
 
@@ -171,8 +189,8 @@ $(document).ready(function(event) {
   	});
 
   	$(".options").on("click", function(){
-   		
-  		if($(this).attr('data-answer') == "correct") { ////////// this seems to not be working
+	   		
+   		if($("input: checked").attributes.data-answer.nodeValue === "correct") { ////////// this seems to not be working
   			game.rightAnswers++;
   			console.log("rightAnswer count " + game.rightAnswers);
   		}
@@ -180,7 +198,10 @@ $(document).ready(function(event) {
   			game.wrongAnswers++;
   			console.log("wrongAnswer count " + game.wrongAnswers);
   		}
+   		
+  		
   	});
+  
 
   	$("#restartTrivia").on("click", function(){
   		game.restartGame();
