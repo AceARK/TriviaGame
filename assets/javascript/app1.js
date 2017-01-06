@@ -1,42 +1,9 @@
-// // Question class
-// class TriviaQuestion {
-// 	constructor(data) {
-// 		console.log("Here now and received data - " + data);
-// 		this.question = data.question;
-// 		this.correctAnswer = data.correct_answer;
-// 		this.incorrectAnswers = data.incorrect_answers;
-// 	}
-
-// 	validate() {
-
-// 		// get value of input radio button clicked
-// 		// compare value to this.correctAnswer
-// 		// if same, return 
-
-// 		return (userChoice == this.rightAnswer);
-// 		//var result = "";
-// 		// if(userChoice === rightAnswer){
-// 		// 	wins++;
-// 		// 	result = "correct";
-// 		// }
-
-// 		// else{
-// 		// 	losses++;
-// 		// 	result = "wrong";
-// 		// }
-// 		//game.displayResult(result);
-// 		// timer.stopCountdown(); /////////// Don't know if this can access timer object created in displayQuestion function of game object.
-// 	}
-	
-// }
-
-
 var countdownInterval;
 
 // Game object
 var game = {
 	
-	time: 30,
+	time: 10,
 	questionCount: 0,
 	rightAnswers: 0,
 	wrongAnswers: 0,
@@ -124,45 +91,41 @@ var game = {
 	},
 
 	evaluateResults : function evaluateResults() {
-		for(var i=0; i<game.questionsAndAnswersArray.length; i++) {
-			var option = "options"+i;
-			var selectedOption = ".options[name="+option+"]";
-			$(selectedOption).each(function() {
-				if($("input: checked").attributes.data-answer.nodeValue === "correct") { 
-		  			game.rightAnswers++;
-		  			console.log("rightAnswer count " + game.rightAnswers);
-		  		}
-		  		else {
-		  			game.wrongAnswers++;
-		  			console.log("wrongAnswer count " + game.wrongAnswers);
-		  		}
-			})
-		}
+
 		
-	}
+
+
+		// for(var i=0; i<game.questionsAndAnswersArray.length; i++) {
+		// 	var option = "options"+i;
+		// 	var selectedOption = ".options[name="+option+"]";
+		// 	$(selectedOption).each(function() {
+		// 		if($("input :checked").attributes.data-answer.nodeValue === "correct") { 
+		//   			game.rightAnswers++;
+		//   			console.log("rightAnswer count " + game.rightAnswers);
+		//   		}
+		//   		else {
+		//   			game.wrongAnswers++;
+		//   			console.log("wrongAnswer count " + game.wrongAnswers);
+		//   		}
+		// 	})
+		// }
+		
+	},
 
 	displayResults : function displayResults() {
 
-		$(".displayResults").show();
-
-		if(game.time === 0){
-			$("#countDownComplete").show();
-		}	
-		 
 		$("#correctAnswers").html(game.rightAnswers);
 		$("#wrongAnswers").html(game.wrongAnswers);
 
 		$("#unanswered").html(game.unanswered);
+		$(".displayResults").show(); 
+
+		if(game.time === 0){
+			$("#countDownComplete").show();
+		}	
 	 	
 	    // setTimeout(function(){$(".displayResults").hide()},4500);
 	},
-
-	// endGame : function endGame() {
-		// $("#correctAnswers").html = this.rightAnswers;
-		// $("#wrongAnswers").html = this.wrongAnswers;
-		// $("#unanswered").html = this.unanswered;
-		// $(".displayStats").show();
-	// },
 
 	restartGame : function restartGame() {
 		this.questionArray = [];
@@ -188,19 +151,19 @@ $(document).ready(function(event) {
   		game.displayQuestions();
   	});
 
-  	$(".options").on("click", function(){
+  	// $(".options").on("click", function(){
 	   		
-   		if($("input: checked").attributes.data-answer.nodeValue === "correct") { ////////// this seems to not be working
-  			game.rightAnswers++;
-  			console.log("rightAnswer count " + game.rightAnswers);
-  		}
-  		else {
-  			game.wrongAnswers++;
-  			console.log("wrongAnswer count " + game.wrongAnswers);
-  		}
+   // 		if($("input: checked").attributes.data-answer.nodeValue === "correct") { ////////// this seems to not be working
+  	// 		game.rightAnswers++;
+  	// 		console.log("rightAnswer count " + game.rightAnswers);
+  	// 	}
+  	// 	else {
+  	// 		game.wrongAnswers++;
+  	// 		console.log("wrongAnswer count " + game.wrongAnswers);
+  	// 	}
    		
   		
-  	});
+  	// });
   
 
   	$("#restartTrivia").on("click", function(){
