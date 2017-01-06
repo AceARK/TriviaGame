@@ -29,7 +29,7 @@ var game = {
 	displayQuestions : function displayQuestions() {
 		for(var i=0; i<game.questionsAndAnswersArray.length; i++) {
 			var currentQuestion = game.questionsAndAnswersArray[i];
-			var questionDiv = $('<div.questionAndAnswerDiv.text-center>');
+			var questionDiv = $('<div class="questionAndAnswerDiv text-center">');
 			questionDiv.html(currentQuestion.question + "<br>");
 			console.log("question being filled " + currentQuestion.question);
 			var correctAnswerIndex = Math.floor(Math.random()*4);
@@ -92,7 +92,13 @@ var game = {
 
 	evaluateResults : function evaluateResults() {
 
-		
+		$('.questionAndAnswerDiv').each(function(){
+			var checkedInput = $(this).find('input[type="radio"]:checked');
+		  if(checkedInput.length > 0)
+		    {
+		       console.log(checkedInput.data('answer'));
+		    }  
+		});
 
 
 		// for(var i=0; i<game.questionsAndAnswersArray.length; i++) {
