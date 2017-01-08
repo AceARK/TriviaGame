@@ -9,100 +9,79 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<link rel="stylesheet" href="assets/css/style.css">
 	<script type="text/javascript" src="assets/javascript/app1.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Bubblegum+Sans" rel="stylesheet">
 </head> 
 <body>
 <!-- app1.js -> get questions and answers from api, fill in questions, and choices, timer, and results page -->
 <div class="container-fluid">
 	<div class="container">
-	<div class="row">
-		<div class="col-sm-12 text-center">
-			<button id="start" class = "btn btn-lg btn-info">Start</button>
+	
+		<div class="row heading">
+			<div class="col-sm-12 text-center">
+				<h1>TRIVIA GAME</h1>
+				<h4>Select Category and Difficulty. Press Start to begin Trivia.</h4>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<!-- <div class="col-sm-12"> -->
-			<div class="dropdown">
-			    <button class="btn btn-info dropdown-toggle categoryDropdown" type="button" data-toggle="dropdown">Category
-			    <span class="caret"></span></button>
-			    <div class="dropdown-menu">
-			      	<a class="dropdown-item category" href="#" data-category="17">Science &amp; Nature</a>
-			      	<a class="dropdown-item category" href="#" data-category="10">Books</a>
-			      	<a class="dropdown-item category" href="#" data-category="9">General Knowledge</a>
-			      	<a class="dropdown-item category" href="#" data-category="22">Geography</a>
-			      	<a class="dropdown-item category" href="#" data-category="12">Music</a> 
-			      	<a class="dropdown-item category" href="#" data-category="15">Video Games</a>
-			    </div>
-			</div>
-			<div class="dropdown">
-				<button class="btn btn-primary difficultyDropdown dropdown-toggle" type="button" data-toggle="dropdown">Difficulty
-			  	<span class="caret"></span></button>
-		  		<div class="dropdown-menu">
-		    		<a class="dropdown-item difficulty" href="#" data-difficulty="easy">Easy</a>
-		    		<a class="dropdown-item difficulty" href="#" data-difficulty="medium">Medium</a>
-		    		<a class="dropdown-item difficulty" href="#" data-difficulty="hard">Hard</a>
-		  		</div>
-			</div>
-			<div class="timer text-center">
-				Time Left: <span id="timeLeft"></span>
-			</div>
-		<!-- </div> -->
-	</div>
-	<div class="trivia row">
-		<div class="col-sm-12" id="triviaQuestions"></div>
-	</div>
 
-	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2 displayResults">
-			<p id="countDownComplete">Time's up!</p>
-			<p id="message"></p>
-			<p>Correct answers: <span id="correctAnswers"></span></p>
-			<p>Wrong answers: <span id="wrongAnswers"></span></p>
-			<p>Unanswered: <span id="unanswered"></span></p>
-
-			<button id="restartTrivia" class = "btn btn-lg btn-info">Restart Trivia</button>
+		<div class="row startRow">
+			<div class="col-sm-12 text-center">
+				<button id="start" class = "btn btn-lg btn-success">Start</button>
+			</div>
 		</div>
-	</div>
+		<div class="row statsRow">
+			<div class="col-sm-4">
+				<div class="dropdown btn-group">
+				    <button class="btn btn-warning dropdown-toggle categoryDropdown" type="button" data-toggle="dropdown">Category
+				    <span class="caret"></span></button>
+				    <div class="dropdown-menu">
+				      	<a class="dropdown-item category" href="#" data-category="17">Science &amp; Nature</a>
+				      	<a class="dropdown-item category" href="#" data-category="10">Books</a>
+				      	<a class="dropdown-item category" href="#" data-category="9">General Knowledge</a>
+				      	<a class="dropdown-item category" href="#" data-category="22">Geography</a>
+				      	<a class="dropdown-item category" href="#" data-category="12">Music</a> 
+				      	<a class="dropdown-item category" href="#" data-category="15">Video Games</a>
+				    </div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="dropdown">
+					<button class="btn btn-warning difficultyDropdown dropdown-toggle" type="button" data-toggle="dropdown">Difficulty
+				  	<span class="caret"></span></button>
+			  		<div class="dropdown-menu">
+			    		<a class="dropdown-item difficulty" href="#" data-difficulty="easy">Easy</a>
+			    		<a class="dropdown-item difficulty" href="#" data-difficulty="medium">Medium</a>
+			    		<a class="dropdown-item difficulty" href="#" data-difficulty="hard">Hard</a>
+			  		</div>
+				</div>
+			</div>	
+			<div class="col-sm-4">
+				<div class="timer text-center">
+					<p id="timeLeft"></p>
+				</div>
+			</div>
+		</div>
+		<div class="triviaRow row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-12" id="triviaQuestions"></div>
+				</div>
+				<div class="row text-center">
+					<div class="col-sm-12 displayResults">
+						<p id="countDownComplete">Time's up!</p>
+						<p><span id="message"></span> Here's the results!</p>
+						<p>Correct answers:  <span id="correctAnswers"></span></p>
+						<p>Wrong answers:  <span id="wrongAnswers"></span></p>
+						<p>Unanswered:  <span id="unanswered"></span></p>
+
+						<button id="restartTrivia" class = "btn btn-lg btn-danger">Restart Trivia</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </div>
-<!-- <div class="container">
-	<div class="row openingPage">
-		<div class="col-sm-8 col-sm-offset-2">
-			<button id="start" class = "btn btn-lg btn-info">Start</button>
-		</div>
-	</div>
-	
 
-	<div class="row">
-		<div class="col-sm-3 col-sm-offset-9">
-			Time Left: <span id="timeLeft"></span>
-		</div>
-	</div>
-	</div>
-	<form class="form-group row">
-		<div class="col-sm-12 triviaQuestion">
-			<div id="triviaQuestion"></div>
-			<div class="answerOptions"></div>
-	    </div>
-	</form>
-
-	<div class="row">
-		<div class="col-sm-8 displayResult col-sm-offset-2">
-			<p id="message"></p>
-			The correct answer was: <span id="rightAnswer"></span>
-			<div class="image"></div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-sm-8 displayStats col-sm-offset-2">
-			<p id="correctAnswers"></p>
-			<p id="wrongAnswers"></p>
-			<p id="unanswered"></p>
-
-			<button id="restartTrivia" class="btn btn-lg btn-info">Restart Trivia</button>
-		</div>
-	</div>
-</div> -->
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>

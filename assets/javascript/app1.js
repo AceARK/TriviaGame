@@ -3,7 +3,7 @@ var countdownInterval;
 // Game object
 var game = {
 	
-	time: 10,
+	time: 30,
 	questionCount: 0,
 	rightAnswers: 0,
 	wrongAnswers: 0,
@@ -35,8 +35,8 @@ var game = {
 	displayQuestions : function displayQuestions() {
 		for(var i=0; i<game.questionsAndAnswersArray.length; i++) {
 			var currentQuestion = game.questionsAndAnswersArray[i];
-			var questionDiv = $('<div class="questionAndAnswerDiv text-center">');
-			questionDiv.html(currentQuestion.question + "<br>");
+			var questionDiv = $('<div class="questionAndAnswerDiv">');
+			questionDiv.html((i+1) + ". " + currentQuestion.question + "<br>");
 			console.log("question being filled " + currentQuestion.question);
 			var correctAnswerIndex = Math.floor(Math.random()*4);
 			var choiceArray = [];
@@ -63,7 +63,7 @@ var game = {
 
 		console.log("choice array " + choiceArray);
 		console.log("correct answer is at position " + (correctAnswerIndex+1));
-		var submitButton = $('<button class="btn btn-lg btn-info" id="submitAnswers">Submit</button>');
+		var submitButton = $('<button class="btn btn-lg btn-danger" id="submitAnswers">Submit</button>');
 		$("#triviaQuestions").append(submitButton);
 
 		$("#submitAnswers").on("click", function(){
@@ -76,6 +76,7 @@ var game = {
 	  	});
 
 		game.startCountdown();
+		$(".timer").show();
 		$("#timeLeft").show();
 	},
 
@@ -92,15 +93,35 @@ var game = {
 		$("#timeLeft").html(game.time);
 		console.log("counting down - " + game.time);
 
-		if(game.time>0){
-			game.time--;
+		switch(game.time) {
+			case 20:
+				$("#timeLeft").css('background-color','#6aff00');
+				break;
+
+			case 10:
+				$("#timeLeft").css('background-color','#e1ff00');
+				break;
+
+			case 5:
+				$("#timeLeft").css('background-color','#ff9900');
+				break;
+
+			case 2:
+				$("#timeLeft").css('background-color','#e23131');
+				break;
+
+			case 0:
+				// $("#timeLeft").html(game.time);
+				game.countDownEnd = true;
+				game.stopCountdown();
+				game.evaluateResults();
+				game.endRound();
+				break;
+
 		}
 
-		if(game.time === 0) {
-			game.countDownEnd = true;
-			game.stopCountdown();
-			game.evaluateResults();
-			game.endRound();
+		if(game.time>0){
+			game.time--;
 		}
 	},
 
@@ -133,17 +154,21 @@ var game = {
 					break;
 			}
 
-			game.endRound();
 		});		
+		game.endRound();
 	},
 
 	// 
 	endRound : function endRound() {
-		$("#timeLeft").hide();
+		// $(".options").attr('disabled',true);
+		// $("#timeLeft").hide();
 		$("#correctAnswers").html(game.rightAnswers);
 		$("#wrongAnswers").html(game.wrongAnswers);
-
 		$("#unanswered").html(game.unanswered);
+		if(game.rightAnswers > 5) {
+			$("#message").html("Good Job! ");
+		}
+		$("#triviaQuestions").empty();
 		$(".displayResults").show(); 
 
 		if(game.time === 0){
@@ -158,8 +183,7 @@ var game = {
 	},
 
 	restartGame : function restartGame() {
-		this.time = 10;
-		// clearInterval(countdownInterval);
+		this.time = 30;
 		this.questionsAndAnswersArray = [];
 		this.arrayOfUsedIndices = [];
 		this.questionCount = 0;
@@ -168,12 +192,17 @@ var game = {
 		this.unanswered = 0;
 		this.countDownStarted = false;
 		this.countDownEnd = false
+		$(".timer").hide();
 		$("#timeLeft").hide();
-		$(".div>").hide();
+		$("#timeLeft").css('background-color','#04ff00');
+		$("#timeLeft").html("");
+		$(".startRow").show();
 		$("#start").attr('disabled',true);
+		$(".displayResults").hide();
 		$(".categoryDropdown:first-child").text("Category");
 		$(".difficultyDropdown:first-child").text("Difficulty");
-		$("#triviaQuestions").empty();
+		$(".categoryDropdown").attr('disabled',false);
+		$(".difficultyDropdown").attr('disabled',false);
 	}
 
 };
@@ -189,6 +218,34 @@ $(document).ready(function(event) {
 	$(".category").on("click",function(){
 		game.category = $(this).data("category");
 		$(".categoryDropdown:first-child").text($(this).text());
+		var url = "url('assets/images/" + game.category + ".jpg')";
+		console.log(url);
+		$("html,body").css('background-image', url);
+		switch(game.category) {
+			case 9: 
+				$("body").css('color', '');
+				break;
+
+			case 10: 
+				$("body").css('color', '');
+				break;
+
+			case 12: 
+				$("body").css('color', '');
+				break;
+
+			case 15: 
+				$("body").css('color', '');
+				break;
+
+			case 17: 
+				$("body").css('color', '');
+				break;
+
+			case 22: 
+				$("body").css('color', '');
+				break;
+		}
 		console.log(game.category);
 		categorySelected = true;
 		console.log(categorySelected);
@@ -205,6 +262,10 @@ $(document).ready(function(event) {
 	});
 
 	$("#start").on("click",function(){
+		$(".startRow").hide();
+		$("#start").attr('disabled', true);
+		$(".categoryDropdown").attr('disabled',true);
+		$(".difficultyDropdown").attr('disabled',true);
   		console.log("Start button clicked");
   		game.startTrivia();
 	});

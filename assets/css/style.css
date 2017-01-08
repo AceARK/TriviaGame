@@ -3,65 +3,87 @@
 }
 
 body {
-	background-color: darkgreen;
+	background-color: #0d5603;
+	background-repeat: no-repeat;
+	/*background-size: 100%;*/
+	/* center center fixed;*/
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 	color: white;
+	font-size: 20px;
+	font-family: 'Bubblegum Sans', cursive;
+	/*text-shadow: black 0.1em 0.1em 0.2em;*/
 }
 
-.trivia {
-	height: 300px;
-	width: 900px;
-	margin: 0 auto 0 auto;
+html {
+	background-color: #0d5603;
+	background-repeat: no-repeat;
+	/*background-size: 100%;*/
+	/* center center fixed;*/
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
-button {
-	/*margin: 20px;*/
+.heading, .startRow, .statsRow, .triviaRow {
+	border: 2px double white;
+	border-radius: 5px;
+	margin: 10px;
+	padding: 10px;
+	background-color: rgba(0,0,0,0.7);
 }
 
-.displayResult, .displayStats {
-	height: 250px;
-	width: 250px;
-	border: 2px solid orange;
-}
-
-.openingPage {
-	margin: auto;
-	position: absolute;
-	z-index: 20;
-	top: 0; left: 90; bottom: 0; right: 0;
-	height: 800px;
-	width: 800px;
-}
-
-#triviaQuestion {
-	height: 80px;
-	display: inline-block;
-	/*min-width: 600%;  change this when configuring css */
+.displayResults {
+	display: none;
 	font-size: 28px;
-	border: 3px solid darkblue;
-	background-color: lightgreen;
-	border-radius: 10px;
-	padding: 15px;
 }
 
-#submitAnswers {
-	width: 100px;
+
+span {
+	font-size: 35px;
+}
+
+.timer>p {
+	height: 50px;
+	width: 50px;
+	font-size: 30px;
+	color: black;
+	border-radius: 50%;
+	margin: 0 auto 0 auto;
+	background-color: #04ff00;
+	font-weight: 600;
+}
+
+.timer {
+	display: none;
+}
+
+.btn, .btn>span {
+	font-size: 20px;
 }
 
 .dropdown-menu {
 	color: black;
 }
 
-/*.options {
-	margin: 15px;
-	height: 80px;
-	width: 100%; /* change this when configuring css */
-	/*border: 3px solid darkblue;
-	background-color: lightblue;
-	border-radius: 10px;
-	padding: 15px;
-	font-size: 28px;
+.questionAndAnswerDiv {
+	margin: 10px; 
+	font-size: 25px;
+	font-weight: 500;
 }
 
-.options> input {
-	margin-right: 15px;
-}*/
+.options {
+	margin: 10px;
+	font-size: 26px;
+}
+
+#submitAnswers {
+	margin-left: 40%;
+}
+
+.dropdown-menu {
+	font-size: 25px;
+}
