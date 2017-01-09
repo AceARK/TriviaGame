@@ -61,6 +61,8 @@ var game = {
 			$("#triviaQuestions").append(questionDiv);
 		}
 
+		$(".triviaRow").show();
+
 		console.log("choice array " + choiceArray);
 		console.log("correct answer is at position " + (correctAnswerIndex+1));
 		var submitButton = $('<button class="btn btn-lg btn-danger" id="submitAnswers">Submit</button>');
@@ -96,18 +98,22 @@ var game = {
 		switch(game.time) {
 			case 20:
 				$("#timeLeft").css('background-color','#6aff00');
+				$("#timeLeft").css('border','4px solid #409b00');
 				break;
 
 			case 10:
 				$("#timeLeft").css('background-color','#e1ff00');
+				$("#timeLeft").css('border','4px solid #a8a30a');
 				break;
 
 			case 5:
 				$("#timeLeft").css('background-color','#ff9900');
+				$("#timeLeft").css('border','4px solid #a36100');
 				break;
 
 			case 2:
 				$("#timeLeft").css('background-color','#e23131');
+				$("#timeLeft").css('border','4px solid #700c0c');
 				break;
 
 			case 0:
@@ -183,18 +189,20 @@ var game = {
 	},
 
 	restartGame : function restartGame() {
-		this.time = 30;
-		this.questionsAndAnswersArray = [];
-		this.arrayOfUsedIndices = [];
-		this.questionCount = 0;
-		this.rightAnswers = 0;
-		this.wrongAnswers = 0;
-		this.unanswered = 0;
-		this.countDownStarted = false;
-		this.countDownEnd = false
+		game.time = 30;
+		game.questionsAndAnswersArray = [];
+		game.arrayOfUsedIndices = [];
+		game.questionCount = 0;
+		game.rightAnswers = 0;
+		game.wrongAnswers = 0;
+		game.unanswered = 0;
+		game.countDownStarted = false;
+		game.countDownEnd = false;
+		$(".triviaRow").hide();
 		$(".timer").hide();
 		$("#timeLeft").hide();
 		$("#timeLeft").css('background-color','#04ff00');
+		$("#timeLeft").css('border','4px solid #028700');
 		$("#timeLeft").html("");
 		$(".startRow").show();
 		$("#start").attr('disabled',true);
@@ -212,7 +220,8 @@ var categorySelected = false;
 
 // program begins
 $(document).ready(function(event) { 
-	$(".displayResults").hide();
+	// $(".triviaRow").hide();
+	// $(".displayResults").hide();
 	$("#start").attr('disabled',true);
 
 	$(".category").on("click",function(){
@@ -221,31 +230,6 @@ $(document).ready(function(event) {
 		var url = "url('assets/images/" + game.category + ".jpg')";
 		console.log(url);
 		$("html,body").css('background-image', url);
-		switch(game.category) {
-			case 9: 
-				$("body").css('color', '');
-				break;
-
-			case 10: 
-				$("body").css('color', '');
-				break;
-
-			case 12: 
-				$("body").css('color', '');
-				break;
-
-			case 15: 
-				$("body").css('color', '');
-				break;
-
-			case 17: 
-				$("body").css('color', '');
-				break;
-
-			case 22: 
-				$("body").css('color', '');
-				break;
-		}
 		console.log(game.category);
 		categorySelected = true;
 		console.log(categorySelected);

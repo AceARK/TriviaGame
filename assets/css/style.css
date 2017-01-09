@@ -54,6 +54,7 @@ span {
 	border-radius: 50%;
 	margin: 0 auto 0 auto;
 	background-color: #04ff00;
+	border: 4px solid #028700;
 	font-weight: 600;
 }
 
@@ -86,4 +87,8 @@ span {
 
 .dropdown-menu {
 	font-size: 25px;
+}
+
+.triviaRow {
+	display: none;
 }
