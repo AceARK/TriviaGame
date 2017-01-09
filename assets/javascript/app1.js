@@ -125,7 +125,8 @@ var game = {
 				break;
 
 			case 0:
-				// $("#timeLeft").html(game.time);
+				$("#timerEnd")[0].currentTime = 0;
+				$("#timerEnd")[0].play();
 				game.countDownEnd = true;
 				game.stopCountdown();
 				game.evaluateResults();
@@ -135,6 +136,10 @@ var game = {
 		}
 
 		if(game.time>0){
+			if((game.time<=10)&&(game.time !==0)){
+				$("#timerSound")[0].currentTime = 0;
+				$("#timerSound")[0].play();
+			}
 			game.time--;
 		}
 	},
