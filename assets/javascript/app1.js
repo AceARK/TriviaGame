@@ -25,8 +25,6 @@ var game = {
 			method: "GET"
 		}).done(function(data){
 			game.questionsAndAnswersArray = data.results;
-			console.log("Array of questions - " + game.questionsAndAnswersArray[4].question);
-			console.log("Array of questions - " + game.questionsAndAnswersArray);
 			// calling function to display questions
 			game.displayQuestions();
 		});
@@ -38,10 +36,8 @@ var game = {
 			var currentQuestion = game.questionsAndAnswersArray[i];
 			var questionDiv = $('<div class="questionAndAnswerDiv">');
 			questionDiv.html("<div class='question'>" +(i+1) + ". " + currentQuestion.question + "</div>");
-			console.log("question being filled " + currentQuestion.question);
 			var correctAnswerIndex = Math.floor(Math.random()*4);
 			var choiceArray = [];
-			console.log("incorrect answers " + currentQuestion.incorrect_answers);
 			var j=0;
 			for(var k=0; k<4; k++) {
 				var newChoice = $('<input>');
@@ -64,16 +60,11 @@ var game = {
 
 		$(".triviaRow").show();
 
-		console.log("choice array " + choiceArray);
-		console.log("correct answer is at position " + (correctAnswerIndex+1));
 		var submitButton = $('<button class="btn btn-lg btn-danger" id="submitAnswers">Submit</button>');
 		$("#triviaQuestions").append(submitButton);
 
 		$("#submitAnswers").on("click", function(){
-
-	  		console.log("submit button clicked");
 	  		game.stopCountdown();
-	  		console.log("countdown stopped. calling evaluate results");
 	  		game.evaluateResults();
 	  		$("#countDownComplete").hide();
 	  	});
@@ -92,16 +83,13 @@ var game = {
 
 	// timer functions
 	startCountdown : function startCountdown() {
-		// if(!game.countDownEnd && !game.countDownStarted){
-			countdownInterval = setInterval(game.decrementTimer,1000);
-		// }
+		countdownInterval = setInterval(game.decrementTimer,1000);
 		game.countDownStarted = true;
 	},
 	
 	decrementTimer : function decrementTimer() {
 
 		$("#timeLeft").html(game.time);
-		console.log("counting down - " + game.time);
 
 		switch(game.time) {
 			case 20:
@@ -147,9 +135,7 @@ var game = {
 	stopCountdown : function stopCountdown() {
 		game.countDownStarted = false;
 		game.countDownEnd = true;
-		console.log("entered stopcountdown");
 		clearInterval(countdownInterval);
-		console.log("cleared countdownInterval");
 	},
 
 	// checking if selected options are correct or wrong
@@ -157,7 +143,6 @@ var game = {
 
 		$('.questionAndAnswerDiv').each(function(){
 			var checkedInput = $(this).find('input[type="radio"]:checked');
-			console.dir(checkedInput);
 
 			switch(checkedInput.data('answer')) {
 				case "correct":
@@ -179,8 +164,6 @@ var game = {
 
 	// 
 	endRound : function endRound() {
-		// $(".options").attr('disabled',true);
-		// $("#timeLeft").hide();
 		$("#correctAnswers").html(game.rightAnswers);
 		$("#wrongAnswers").html(game.wrongAnswers);
 		$("#unanswered").html(game.unanswered);
@@ -242,20 +225,15 @@ $(document).ready(function(event) {
 		game.category = $(this).data("category");
 		$(".categoryDropdown:first-child").text($(this).text());
 		var url = "url('assets/images/" + game.category + ".jpg')";
-		console.log(url);
 		$("html,body").css('background-image', url);
-		console.log(game.category);
 		categorySelected = true;
-		console.log(categorySelected);
 		enableStartButton();
 	});
 
 	$(".difficulty").on("click",function(){
 		game.difficulty = $(this).data("difficulty");
 		$(".difficultyDropdown:first-child").text($(this).text());
-		console.log(game.difficulty);
 		difficultySelected = true;
-		console.log(difficultySelected);
 		enableStartButton();
 	});
 
@@ -265,7 +243,6 @@ $(document).ready(function(event) {
 		$("#start").attr('disabled', true);
 		$(".categoryDropdown").attr('disabled',true);
 		$(".difficultyDropdown").attr('disabled',true);
-  		console.log("Start button clicked");
   		game.startTrivia();
 	});
 
@@ -277,9 +254,7 @@ $(document).ready(function(event) {
 });
 
 function enableStartButton() {
-	console.log("category selected - "+categorySelected + ". difficulty selected - "+difficultySelected+".");
 	if(categorySelected && difficultySelected) {
-		console.log("entering enableSTart condition");
 		$("#start").attr('disabled',false);
 	}
 }
