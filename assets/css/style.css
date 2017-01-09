@@ -3,7 +3,7 @@
 }
 
 body {
-	background-color: #0d5603;
+	background-color: black;
 	background-repeat: no-repeat;
 	/*background-size: 100%;*/
 	/* center center fixed;*/
@@ -18,7 +18,7 @@ body {
 }
 
 html {
-	background-color: #0d5603;
+	background-color: black;
 	background-repeat: no-repeat;
 	/*background-size: 100%;*/
 	/* center center fixed;*/
@@ -72,13 +72,17 @@ span {
 
 .questionAndAnswerDiv {
 	margin: 10px; 
-	font-size: 25px;
 	font-weight: 500;
 }
 
-.options {
-	margin: 10px;
+.question {
+	color: #fcc94b;
 	font-size: 26px;
+}
+
+label {
+	margin: 10px;
+	font-size: 24px;
 }
 
 #submitAnswers {
@@ -89,6 +93,16 @@ span {
 	font-size: 25px;
 }
 
-.triviaRow {
-	display: none;
+h2 {
+	padding: 15px;
+}
+
+#green {
+	color: #41d33f;
+	font-size: 40px;
+}
+
+.yellow {
+	color: #ffc83f;
+	font-size: 40px;
 }

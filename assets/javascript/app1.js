@@ -1,4 +1,5 @@
 var countdownInterval;
+var resetAfterResultDisplay;
 
 // Game object
 var game = {
@@ -36,7 +37,7 @@ var game = {
 		for(var i=0; i<game.questionsAndAnswersArray.length; i++) {
 			var currentQuestion = game.questionsAndAnswersArray[i];
 			var questionDiv = $('<div class="questionAndAnswerDiv">');
-			questionDiv.html((i+1) + ". " + currentQuestion.question + "<br>");
+			questionDiv.html("<div class='question'>" +(i+1) + ". " + currentQuestion.question + "</div>");
 			console.log("question being filled " + currentQuestion.question);
 			var correctAnswerIndex = Math.floor(Math.random()*4);
 			var choiceArray = [];
@@ -44,7 +45,7 @@ var game = {
 			var j=0;
 			for(var k=0; k<4; k++) {
 				var newChoice = $('<input>');
-				newChoice.attr({'type': 'radio', 'name' : 'options'+[i]});
+				newChoice.attr({'type': 'radio', 'name' : 'options'+ i, 'id' : 'options'+ i + '-'+ k});
 				newChoice.addClass('options');
 				newChoice.css({'width' : '20px' , 'height' : '20px'});
 				if(k === correctAnswerIndex) {
@@ -56,7 +57,7 @@ var game = {
 					newChoice.data("answer", "wrong");
 				}
 				questionDiv.append(newChoice);
-				questionDiv.append(choiceArray[k] + "</label>");
+				questionDiv.append("<label for=options"+ i + '-'+ k +">"+choiceArray[k]+"</label>");
 			}
 			$("#triviaQuestions").append(questionDiv);
 		}
@@ -80,6 +81,13 @@ var game = {
 		game.startCountdown();
 		$(".timer").show();
 		$("#timeLeft").show();
+
+		$(".questionAndAnswerDiv>label").hover(function(){
+	  		var timerColor = $("#timeLeft").css('background-color');
+	  		$(this).css('color', timerColor);
+	  	}, function(){
+	  		$(this).css('color', 'white');
+	  	});
 	},
 
 	// timer functions
@@ -182,13 +190,13 @@ var game = {
 		}	
 		$("#submitAnswers").attr('disabled', true);
 	 	
-	    setTimeout(function(){
+	    resetAfterResultDisplay = setTimeout(function(){
 	    	$(".displayResults").hide();
-	    	game.restartGame();
+	    	game.resetGame();
 	    },4500);
 	},
 
-	restartGame : function restartGame() {
+	resetGame : function resetGame() {
 		game.time = 30;
 		game.questionsAndAnswersArray = [];
 		game.arrayOfUsedIndices = [];
@@ -198,13 +206,15 @@ var game = {
 		game.unanswered = 0;
 		game.countDownStarted = false;
 		game.countDownEnd = false;
-		$(".triviaRow").hide();
+		categorySelected = false;
+		difficultySelected = false;
 		$(".timer").hide();
 		$("#timeLeft").hide();
 		$("#timeLeft").css('background-color','#04ff00');
 		$("#timeLeft").css('border','4px solid #028700');
 		$("#timeLeft").html("");
 		$(".startRow").show();
+		$(".instruction").show();
 		$("#start").attr('disabled',true);
 		$(".displayResults").hide();
 		$(".categoryDropdown:first-child").text("Category");
@@ -216,12 +226,11 @@ var game = {
 };
 
 var categorySelected = false;
-	var difficultySelected = false;
+var difficultySelected = false;
 
 // program begins
 $(document).ready(function(event) { 
-	// $(".triviaRow").hide();
-	// $(".displayResults").hide();
+	$(".instruction").show();
 	$("#start").attr('disabled',true);
 
 	$(".category").on("click",function(){
@@ -246,6 +255,7 @@ $(document).ready(function(event) {
 	});
 
 	$("#start").on("click",function(){
+		$(".instruction").hide();
 		$(".startRow").hide();
 		$("#start").attr('disabled', true);
 		$(".categoryDropdown").attr('disabled',true);
@@ -255,7 +265,8 @@ $(document).ready(function(event) {
 	});
 
   	$("#restartTrivia").on("click", function(){
-  		game.restartGame();
+  		clearTimeout(resetAfterResultDisplay);
+  		game.resetGame();
   	});
 
 });
