@@ -28,6 +28,7 @@ html {
     background-size: cover;
 }
 
+/* style for all divs */
 .heading, .startRow, .statsRow, .triviaRow {
 	border: 2px double white;
 	border-radius: 5px;
@@ -36,16 +37,18 @@ html {
 	background-color: rgba(0,0,0,0.7);
 }
 
+/* hide result div */
 .displayResults {
 	display: none;
 	font-size: 28px;
 }
 
-
+/* all spans styling */
 span {
 	font-size: 35px;
 }
 
+/* timer css */
 .timer>p {
 	height: 50px;
 	width: 50px;
@@ -58,50 +61,61 @@ span {
 	font-weight: 600;
 }
 
+/* hiding timer at first */
 .timer {
 	display: none;
 }
 
+/* button font and caret font */
 .btn, .btn>span {
 	font-size: 20px;
 }
 
+/* dropdown options font color */
 .dropdown-menu {
 	color: black;
 }
 
+/* question and answer div */
 .questionAndAnswerDiv {
 	margin: 10px; 
 	font-weight: 500;
 }
 
+/* style for questions */
 .question {
 	color: #fcc94b;
 	font-size: 26px;
 }
 
+/* style for answer text */
 label {
 	margin: 10px;
 	font-size: 24px;
 }
 
+/* submit button style */
 #submitAnswers {
 	margin-left: 40%;
 }
 
+/* dropdown menu font size */
 .dropdown-menu {
 	font-size: 25px;
 }
 
+/* style for instruction */
 h2 {
 	padding: 15px;
 }
 
+/* word 'start' in instruction */
 #green {
 	color: #41d33f;
 	font-size: 40px;
 }
 
+/* words 'category' and 'difficulty' in instruction */
 .yellow {
 	color: #ffc83f;
 	font-size: 40px;

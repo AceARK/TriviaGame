@@ -12,22 +12,26 @@
 	<link href="https://fonts.googleapis.com/css?family=Bubblegum+Sans" rel="stylesheet">
 </head> 
 <body>
-<!-- app1.js -> get questions and answers from api, fill in questions, and choices, timer, and results page -->
 <div class="container-fluid">
 	<div class="container">
-	
+
+		<!-- heading -->
 		<div class="row heading">
 			<div class="col-sm-12 text-center">
 				<h1>TRIVIA GAME</h1>
 			</div>
 		</div>
 
+		<!-- start button row -->
 		<div class="row startRow">
 			<div class="col-sm-12 text-center">
 				<button id="start" class = "btn btn-lg btn-success">Start</button>
 			</div>
 		</div>
+
+		<!-- Category, Difficulty selection and Timer row -->
 		<div class="row statsRow">
+			<!-- Category dropdown -->
 			<div class="col-sm-4">
 				<div class="dropdown btn-group">
 				    <button class="btn btn-warning dropdown-toggle categoryDropdown" type="button" data-toggle="dropdown">Category
@@ -42,6 +46,7 @@
 				    </div>
 				</div>
 			</div>
+			<!-- Difficulty dropdown -->
 			<div class="col-sm-4">
 				<div class="dropdown">
 					<button class="btn btn-warning difficultyDropdown dropdown-toggle" type="button" data-toggle="dropdown">Difficulty
@@ -53,22 +58,28 @@
 			  		</div>
 				</div>
 			</div>	
+			<!-- Timer -->
 			<div class="col-sm-4">
 				<div class="timer text-center">
 					<p id="timeLeft"></p>
 				</div>
 			</div>
 		</div>
+
+		<!-- Trivia Row -->
 		<div class="triviaRow row">
 			<div class="col-sm-12">
+				<!-- Instruction row -->
 				<div class="row instruction text-center">
 					<div class="col-sm-12">
 						<h2>Finalize <span class="yellow">Category</span> and <span class="yellow">Difficulty</span>. Then press <span id="green">Start</span> to begin Trivia.</h2>
 					</div>
 				</div>
+				<!-- Trivia questionaire row -->
 				<div class="row">
 					<div class="col-sm-12" id="triviaQuestions"></div>
 				</div>
+				<!-- Display results row -->
 				<div class="row text-center">
 					<div class="col-sm-12 displayResults">
 						<p id="countDownComplete">Time's up!</p>
@@ -82,6 +93,8 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Audio files -->
 		<audio id="timerSound">
 		    <source src="assets/soundfiles/ticktock.mp3">
 		</audio>
